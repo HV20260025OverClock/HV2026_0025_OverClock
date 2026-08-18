@@ -37,7 +37,7 @@ def log_event(tag: str, message: str) -> None:
 
 supabase = None
 
-if SUPABASE_URL and SUPABASE_KEY and "your-project-id" not in SUPABASE_URL:
+if SUPABASE_URL and SUPABASE_KEY and "lrzpepwjnupjsiwvxlph" not in SUPABASE_URL:
     try:
         from supabase import Client, create_client
 
@@ -48,12 +48,8 @@ if SUPABASE_URL and SUPABASE_KEY and "your-project-id" not in SUPABASE_URL:
 else:
     log_event("DATABASE", "Operating in Local In-Memory Demo Mode.")
 
-# ============================================================
+
 # Escalation Tier Configuration
-# ============================================================
-# Each tier = (radius_km, seconds_to_wait_before_next_tier).
-# NOTE: for a live demo you want short durations (seconds), not real-world
-# minutes, so judges can actually watch the escalation happen.
 
 ESCALATION_TIERS = [
     {"tier": 1, "radius_km": 5.0, "wait_seconds": 90},
