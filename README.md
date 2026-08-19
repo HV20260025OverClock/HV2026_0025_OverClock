@@ -40,6 +40,19 @@ RedAid provides a structured emergency blood discovery workflow:
 8. If insufficient donors respond within the defined wait window, the system expands the search radius and identifies additional donors.
 9. All important request status changes are recorded for tracking and auditing.
 
+
+---
+
+## Screenshots
+
+The following screenshots demonstrate the RedAid hospital dashboard and donor mobile application.
+
+Hospital Dashboard
+
+<img width="1600" height="808" alt="dashboard1 png" src="https://github.com/user-attachments/assets/3c0584ed-f313-44ed-addd-33e89500ed69" />
+
+<img width="1600" height="813" alt="dashboard2 png" src="https://github.com/user-attachments/assets/196cf32a-8914-44d1-8939-564a80236d3c" />
+
 ---
 
 ## System Overview
