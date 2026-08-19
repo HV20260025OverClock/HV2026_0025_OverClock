@@ -114,7 +114,33 @@ UrgencyLevel = Literal[
     "medium",
 ]
 
+class RegisterDonorRequest(BaseModel):
+    name: str
+    email: str
+    phone: str
+    password: str
+    blood_type: BloodGroup
+    latitude: float
+    longitude: float
+    date_of_birth: Optional[str] = None
+    weight_kg: Optional[float] = None
 
+@app.post("/auth/register")
+def register_donor(payload: RegisterDonorRequest):
+    # 1. insert into users (role='donor', hash the password)
+    # 2. insert into donors (user_id, blood_type, latitude, longitude, etc.)
+    # 3. return {"user_id": ..., "donor_id": ..., "name": ..., "email": ...}
+    ...
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+@app.post("/auth/login")
+def login(payload: LoginRequest):
+    # verify password hash, look up donors row for that user
+    # return {"user_id": ..., "donor_id": ..., "name": ..., "email": ..., "blood_type": ...}
+    ...
 class EmergencyRequestCreate(BaseModel):
     blood_group: BloodGroup
 
