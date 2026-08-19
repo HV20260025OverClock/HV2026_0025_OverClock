@@ -1463,7 +1463,71 @@ def get_donor_profile(
                 f"{exc}"
             ),
         )
+@app.get("/donors/{donor_id}/notifications")
+def get_donor_notifications(
+    donor_id: str,
+    status: str = "pending"
+):
+    if not supabase:
+        raise HTTPException(
+            status_code=503,
+            detail="Supabase is not connected."
+        )
 
+    try:
+        # First find the donor's user_id
+        donor_response = (
+            supabase
+            .table("donors")
+            .select("id,user_id")
+            .eq("id", donor_id)
+            .limit(1)
+            .execute()
+        )
+
+        if not donor_response.data:
+            raise HTTPException(
+                status_code=404,
+                detail="Donor not found"
+            )
+
+        user_id = donor_response.data[0]["user_id"]
+
+        # Notifications belong to the user, not directly to the donor
+        query = (
+            supabase
+            .table("notifications")
+            .select("*")
+            .eq("user_id", user_id)
+            .order("created_at", desc=True)
+        )
+
+        # Your schema has is_read, not a status column.
+        if status == "pending":
+            query = query.eq("is_read", False)
+
+        response = query.execute()
+
+        notifications = response.data or []
+
+        return {
+            "count": len(notifications),
+            "notifications": notifications
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as exc:
+        print(
+            f"[NOTIFICATIONS] Lookup failed: {exc}",
+            flush=True
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch notifications: {exc}"
+        )
 
 # ============================================================
 # DONOR AVAILABILITY
